@@ -53,6 +53,17 @@ class Action
     {
         return $this->http_client->get($this->slug($uuid));
     }
+    /**
+     * Получить данные по параметру im_number или др
+     * @param string $id
+     * @param string $param
+     * @return ApiResponse
+     * @throws RequestException
+     */
+    public function getWithParams(string $param, string $id): ApiResponse
+    {
+        return $this->http_client->get($this->slugWidthParams($param, $id));
+    }
 
     /**
      * Отправка запрос на добавление элемента
@@ -76,5 +87,10 @@ class Action
             return static::URL;
         }
         return static::URL . '/' . $uuid;
+    }
+
+    protected function slugWidthParams(string $param, string $id): string
+    {
+        return static::URL . '?'.$param . '=' . $id;
     }
 }
